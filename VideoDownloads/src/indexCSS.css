@@ -1,0 +1,179 @@
+/* setup general de la pagina */
+
+html, body {
+    margin: 0;
+    padding: 0;
+  }
+  
+  html {
+    font-size: 13px;
+    background-color:white;
+  }
+  
+  body {
+    width: 100%;
+    min-width: 800px;
+    margin: 0 auto;
+  }
+  html {
+    background-image: url('./assets/pattern_134.gif'); /* Replace with the path to your image */
+    background-repeat: repeat; /* Set to 'repeat-x' for horizontal repeat or 'repeat-y' for vertical repeat */
+    background-size: auto; /* Adjust as needed */
+  }
+  
+.logo {
+    height: 8em;
+    padding: 1.5em;
+  }
+  .logo:hover {
+    filter: drop-shadow(0 0 2em #646cffaa);
+  }
+  .logo.react:hover {
+    filter: drop-shadow(0 0 2em #61dafbaa);
+  }
+
+
+  h1, h2, h3, li {
+    font-family: 'Roboto Condensed', sans-serif;
+    color: white;
+  }
+  
+  h1 {
+    font-size: 4rem;
+    text-shadow: 2px 2px 10px rgb(49, 146, 236);
+  }
+  
+  h2 {
+    font-size: 3rem;
+    text-align: center;
+  }
+  
+  h3 {
+    font-size: 2.2rem;
+  }
+  
+  p, li {
+    font-size: 1.6rem;
+    line-height: 1.5;
+    color: #889eac;
+    text-shadow: 2px 2px 10px rgb(11, 26, 156);
+  }
+
+
+  header {
+    display: flex;
+    flex-flow:row;
+    justify-content: center;
+
+  }
+  header h1 {
+    margin-bottom: 0;
+  }
+  header p {
+    margin-top: 0;
+    
+  }
+  .searchbar{
+    margin-top: 5em;
+    text-align: center;
+    font-size: 1.6rem;
+ 
+  }
+
+  .searchbar{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 60vh;
+    background: rgba(255, 255, 255, 0.849);
+    
+ 
+    max-width: 800px; /* Maximum width for the card */
+ 
+}
+  
+.card-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .card {
+    display: flex;
+    width: 50%;
+    margin: 0 auto; /* Center the div horizontally */
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 20px;
+    background:#1b2429a8;
+    border: 1px solid #3D515C;
+    border-radius: 8px;
+    height: 75vh;
+    
+  }
+form {
+  
+ display: flex;
+ width: 100%;
+ flex-direction: row;
+ justify-content: center;
+ align-items: center;
+
+}
+
+.videoInfo{
+  margin-top:30px;
+  background: rgba(255, 255, 255, 0.075);
+  display: flex;
+  flex-direction: column;
+}
+.videoInfo img{
+  width: 50%;
+  margin-left: 10px;
+  border: 1px solid #383c44;
+  border-radius: .5em;
+}
+
+.videoInfo p{
+  margin-left: 10px;
+  color: white;
+  text-shadow: 2px 2px 10px rgb(53, 93, 129);
+}
+
+.butdur{
+  display: flex;
+  justify-content: space-between; /* Optional: Add space between items */
+  align-items: center; /* Optional: Align items vertically in the center */
+}
+
+.download{
+  margin-right: 10px;
+  background: #0151ff;
+  border-radius: .5em;
+  border-color: #0151ff;
+}
+  input{
+    margin-top: 10px;
+    padding: 1em;
+    width: 70%;
+    margin-right: 10px;
+  }
+  button{
+    padding: 1.1em;
+    background: #b11ca9;
+    color: white;
+    border-radius: .5em;
+    border-color: #b11ca9;
+    margin-top: 10px;
+  }
+
+  footer {
+    background-color: rgb(15, 15, 15);
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    color: rgba(107, 8, 8, 0.527);
+    width: 100%;
+  }
+
+
