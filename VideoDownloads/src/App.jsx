@@ -46,32 +46,35 @@ const App =()=> {
     <>
 
     <header>
-        <img src={logo} className="logo" alt="React logo" />
-        <div className='flexy'>
+      <div className='flexy'>
+      <img src={logo} className="logo" alt="React logo" />
+        <div >
         <h1>VixenDL</h1>
         <p>Download videos or audio from urls</p>
         </div>
+      </div>
+        <form onSubmit={submitButton}>
+          <input value={videoUrl} type="text"  placeholder="Escribe la URL aquí" 
+          onChange={handleChangeInput}/>
+          <button type='submit' className='search'>Buscar</button>
+        </form>
     </header>
 
     <div className="card-container">
     <div className="card">
-      <form onSubmit={submitButton}>
-      <input value={videoUrl} type="text"  placeholder="Escribe la URL aquí" 
-      onChange={handleChangeInput}/>
-      
-      <button type='submit'>Buscar</button>
-      
-      </form>
       {
       videoInfo !=null ? 
       (
          <div className='videoInfo'>
-         <p>{videoInfo.title}</p>
          <img src={videoInfo.thumbnail} alt="" />
+         <div className='minimi'>
+         <p>{videoInfo.title}</p>
          <div className='butdur'>
            <p>duration: {videoInfo.duration}</p> 
            <button onClick={handleDownload} className='download'>Download</button>
          </div>
+         </div>
+         
        </div>
       ) 
       : null
@@ -80,7 +83,7 @@ const App =()=> {
   </div>
 
     <footer>
-      <p>hecho por el god</p>
+      <p>The singularity is near!</p>
     </footer>
  </>
   )

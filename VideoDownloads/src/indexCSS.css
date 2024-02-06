@@ -13,14 +13,9 @@ html, body {
   body {
     width: 100%;
     min-width: 800px;
-    margin: 0 auto;
+    min-height: 100vh;
   }
-  html {
-    background-image: url('./assets/pattern_134.gif'); /* Replace with the path to your image */
-    background-repeat: repeat; /* Set to 'repeat-x' for horizontal repeat or 'repeat-y' for vertical repeat */
-    background-size: auto; /* Adjust as needed */
-  }
-  
+
 .logo {
     height: 8em;
     padding: 1.5em;
@@ -39,7 +34,7 @@ html, body {
   }
   
   h1 {
-    font-size: 4rem;
+    font-size: 4.2rem;
     text-shadow: 2px 2px 10px rgb(49, 146, 236);
   }
   
@@ -53,7 +48,8 @@ html, body {
   }
   
   p, li {
-    font-size: 1.6rem;
+    font-size: 1.8rem;
+    font-family: 'Roboto Condensed', sans-serif;
     line-height: 1.5;
     color: #889eac;
     text-shadow: 2px 2px 10px rgb(11, 26, 156);
@@ -62,36 +58,33 @@ html, body {
 
   header {
     display: flex;
-    flex-flow:row;
-    justify-content: center;
-
+    flex-direction: column;
+    background-image: url('./assets/pattern_134.gif'); 
+    background-repeat: repeat;
+    background-size: auto; 
+    height: 30vh;
   }
+.flexy {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 4em;
+  margin-top: 2em;
+}
   header h1 {
     margin-bottom: 0;
   }
+
   header p {
     margin-top: 0;
-    
   }
+
   .searchbar{
     margin-top: 5em;
     text-align: center;
     font-size: 1.6rem;
- 
   }
 
-  .searchbar{
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    height: 60vh;
-    background: rgba(255, 255, 255, 0.849);
-    
- 
-    max-width: 800px; /* Maximum width for the card */
- 
-}
-  
 .card-container {
     display: flex;
     justify-content: center;
@@ -99,67 +92,66 @@ html, body {
 
   .card {
     display: flex;
-    width: 50%;
-    margin: 0 auto; /* Center the div horizontally */
-    justify-content: flex-start;
-    align-items: flex-start;
+    width: 55%;
+    margin-top: 10px;
     flex-direction: column;
-    padding: 20px;
-    background:#1b2429a8;
-    border: 1px solid #3D515C;
-    border-radius: 8px;
-    height: 75vh;
-    
+    height: 55vh;
   }
+
 form {
-  
  display: flex;
  width: 100%;
  flex-direction: row;
  justify-content: center;
  align-items: center;
-
 }
 
 .videoInfo{
   margin-top:30px;
-  background: rgba(255, 255, 255, 0.075);
+  background: white;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  border: 1px solid #d9e5eb;
+  border-radius: 8px;
 }
 .videoInfo img{
-  width: 50%;
-  margin-left: 10px;
+  width: 27%;
   border: 1px solid #383c44;
-  border-radius: .5em;
+  
 }
 
 .videoInfo p{
   margin-left: 10px;
-  color: white;
-  text-shadow: 2px 2px 10px rgb(53, 93, 129);
+  color: black;
+  
+  text-shadow: none;
+  font-size: 1.1rem;
 }
 
 .butdur{
+  
   display: flex;
-  justify-content: space-between; /* Optional: Add space between items */
-  align-items: center; /* Optional: Align items vertically in the center */
+  justify-content: space-between;
+}
+
+.butdur p{
+  margin-top: 0;
 }
 
 .download{
-  margin-right: 10px;
   background: #0151ff;
   border-radius: .5em;
   border-color: #0151ff;
+  color: white;
 }
   input{
     margin-top: 10px;
-    padding: 1em;
-    width: 70%;
+    padding: 1.4em;
+    width: 45%;
     margin-right: 10px;
   }
-  button{
-    padding: 1.1em;
+  .search{
+    padding: 1.4em;
     background: #b11ca9;
     color: white;
     border-radius: .5em;
@@ -172,7 +164,7 @@ form {
     text-align: center;
     position: fixed;
     bottom: 0;
-    color: rgba(107, 8, 8, 0.527);
+    
     width: 100%;
   }
 
