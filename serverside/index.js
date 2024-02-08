@@ -8,7 +8,7 @@ const path = require('path');
 app.use(express.json()); 
 
 app.use(cors())
-
+let title = ''
 app.get('/video-info', (request, response) => {
   const videoUrl = request.query.url;
   let dataBuffer = '';
@@ -31,6 +31,8 @@ app.get('/video-info', (request, response) => {
           try {
               // Parsea la wea 
               const jsonData = JSON.parse(dataBuffer);
+              console.log(jsonData.title)
+              title = jsonData.title
               response.json(jsonData);
           } catch (error) {
               console.error('Error parsing JSON:', error);
@@ -48,7 +50,7 @@ app.post('/download', (req, res) => {
 
   // sub-proceso para ejecutar los comandos en la consola
   const ytDlpProcess = spawn('yt-dlp', [
-    '-o', path.join(__dirname, 'VideosDescargados', 'my_video.webm'),
+    '-o', path.join(__dirname, 'VideosDescargados', `${title}.%(ext)s`),
     videoUrl
   ]);
   ytDlpProcess.stdout.on('data', (data) => {
@@ -65,7 +67,7 @@ app.post('/download', (req, res) => {
     if (code === 0) {
       // video descargado de forma exitosa
       // Enviar el video al cliente
-      const videoFilePath = path.join(__dirname, 'VideosDescargados', 'my_video.webm');
+      const videoFilePath = path.join(__dirname, 'VideosDescargados',  `${title}.webm`);
       res.sendFile(videoFilePath);
     } else {
       // La descarga falló

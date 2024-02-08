@@ -29,7 +29,7 @@ const App =()=> {
       const blob = new Blob([response.data]);
       const link = document.createElement('a');
       link.href = window.URL.createObjectURL(blob);
-      link.download = 'downloaded-video.webm';
+      link.download = videoInfo.title+'.webm';
       link.click();
     } catch (error) {
       console.error('Error initiating video download:', error);
