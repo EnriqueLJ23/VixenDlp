@@ -6,14 +6,14 @@ html, body {
   }
   
   html {
-    font-size: 13px;
+ 
     background-color:white;
   }
   
   body {
     width: 100%;
     min-width: 800px;
-    min-height: 100vh;
+  
   }
 
 .logo {
@@ -61,15 +61,13 @@ html, body {
     flex-direction: column;
     background-image: url('./assets/pattern_134.gif'); 
     background-repeat: repeat;
-    background-size: auto; 
-    height: 30vh;
+    height: 30%;
   }
 .flexy {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin-bottom: 4em;
-  margin-top: 2em;
+  align-items: center;
 }
   header h1 {
     margin-bottom: 0;
@@ -79,57 +77,55 @@ html, body {
     margin-top: 0;
   }
 
-  .searchbar{
-    margin-top: 5em;
-    text-align: center;
-    font-size: 1.6rem;
-  }
-
 .card-container {
     display: flex;
     justify-content: center;
+  
+  margin-top: 40px;
   }
 
   .card {
     display: flex;
-    width: 55%;
-    margin-top: 10px;
+    width: 55%;  
     flex-direction: column;
-    height: 55vh;
+    height: 12vh;
   }
 
 form {
  display: flex;
- width: 100%;
- flex-direction: row;
+ margin-bottom: 20px;
  justify-content: center;
- align-items: center;
+ 
+ 
 }
 
-.videoInfo{
-  margin-top:30px;
+.videoInfo{  
   background: white;
   display: flex;
   flex-direction: row;
   border: 1px solid #d9e5eb;
   border-radius: 8px;
+  
 }
 .videoInfo img{
-  width: 27%;
+  width: 30%;
   border: 1px solid #383c44;
-  
 }
 
 .videoInfo p{
   margin-left: 10px;
   color: black;
-  
   text-shadow: none;
   font-size: 1.1rem;
 }
 
+.videoInfo select {
+  margin-left: 20px;
+  padding-right: 50px;
+}
+
+
 .butdur{
-  
   display: flex;
   justify-content: space-between;
 }
@@ -143,22 +139,23 @@ form {
   border-radius: .5em;
   border-color: #0151ff;
   color: white;
+  margin-left: 10px;
 }
   input{
-    margin-top: 10px;
-    padding: 1.4em;
+    padding: 20px;
     width: 45%;
     margin-right: 10px;
   }
   .search{
-    padding: 1.4em;
+    padding: 20px;
     background: #b11ca9;
     color: white;
     border-radius: .5em;
     border-color: #b11ca9;
-    margin-top: 10px;
   }
 
+
+  
   footer {
     background-color: rgb(15, 15, 15);
     text-align: center;

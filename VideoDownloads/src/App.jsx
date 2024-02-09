@@ -1,12 +1,30 @@
 import { useState, useEffect} from 'react';
-import logo from './assets/logo.jpg'
+import logo from './assets/logo3.png'
 import axios from 'axios'
 // import './App.css'
+
 
 const App =()=> {
   const [videoUrl, setVideoUrl] = useState('');
   const [videoInfo, setVideoInfo] = useState(null);
 
+  const filterBestMp4Formats = () => {
+    const mp4Formats = videoInfo ? videoInfo.formats.filter((format) => format.ext === 'mp4') : [];
+    
+    // Create a map to store the best format for each resolution
+    const bestFormatsMap = new Map();
+
+    // Iterate through each MP4 format and update the map with the best format for each resolution
+    mp4Formats.forEach((format) => {
+      const resolution = format.resolution;
+      if (!bestFormatsMap.has(resolution) || format.tbr > bestFormatsMap.get(resolution).tbr) {
+        bestFormatsMap.set(resolution, format);
+      }
+    });
+
+    // Return an array containing the best format for each resolution
+    return Array.from(bestFormatsMap.values());
+  };
   const submitButton =  async (event) => {
     event.preventDefault()
     var urlvideo = videoUrl
@@ -42,6 +60,8 @@ const App =()=> {
     console.log(event.target.value)
     setVideoUrl(event.target.value)
   }
+  const bestMp4Formats = filterBestMp4Formats();
+
   return (
     <>
 
@@ -70,8 +90,15 @@ const App =()=> {
          <div className='minimi'>
          <p>{videoInfo.title}</p>
          <div className='butdur'>
-           <p>duration: {videoInfo.duration}</p> 
-           <button onClick={handleDownload} className='download'>Download</button>
+           <p>duration: {videoInfo.duration_string}</p> 
+        <select>
+        {bestMp4Formats.map((format, index) => (
+                      <option key={index} value={format.format_id}>
+                        {format.resolution} - {format.ext}
+                      </option>
+                    ))}
+        </select>
+         <button onClick={handleDownload} className='download'>Download</button>
          </div>
          </div>
          
