@@ -11,11 +11,7 @@ const App =()=> {
 
   const filterBestMp4Formats = () => {
     const mp4Formats = videoInfo ? videoInfo.formats.filter((format) => format.ext === 'mp4' && format.audio_ext === 'none') : [];
-    
-    // Create a map to store the best format for each resolution
     const bestFormatsMap = new Map();
-
-    // Iterate through each MP4 format and update the map with the best format for each resolution
     mp4Formats.forEach((format) => {
       const resolution = format.resolution;
       if (!bestFormatsMap.has(resolution) || format.tbr > bestFormatsMap.get(resolution).tbr) {
