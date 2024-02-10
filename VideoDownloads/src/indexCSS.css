@@ -114,9 +114,9 @@ form {
 
 .videoInfo p{
   margin-left: 10px;
-  color: black;
+  color: rgb(73, 73, 73);
   text-shadow: none;
-  font-size: 1.1rem;
+  font-size: .9rem;
 }
 
 .videoInfo select {
@@ -132,12 +132,13 @@ form {
 
 .butdur p{
   margin-top: 0;
+  font-size: .8rem;
 }
 
 .download{
-  background: #0151ff;
+  background: #02a157;
   border-radius: .5em;
-  border-color: #0151ff;
+  border-color: #02a157;
   color: white;
   margin-left: 10px;
 }

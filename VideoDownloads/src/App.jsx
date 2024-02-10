@@ -7,9 +7,10 @@ import axios from 'axios'
 const App =()=> {
   const [videoUrl, setVideoUrl] = useState('');
   const [videoInfo, setVideoInfo] = useState(null);
+  const [selectedFormat, setSelectedFormat] = useState(null); 
 
   const filterBestMp4Formats = () => {
-    const mp4Formats = videoInfo ? videoInfo.formats.filter((format) => format.ext === 'mp4') : [];
+    const mp4Formats = videoInfo ? videoInfo.formats.filter((format) => format.ext === 'mp4' && format.audio_ext === 'none') : [];
     
     // Create a map to store the best format for each resolution
     const bestFormatsMap = new Map();
@@ -21,8 +22,6 @@ const App =()=> {
         bestFormatsMap.set(resolution, format);
       }
     });
-
-    // Return an array containing the best format for each resolution
     return Array.from(bestFormatsMap.values());
   };
   const submitButton =  async (event) => {
@@ -39,15 +38,17 @@ const App =()=> {
     }
 
   }
+  
+  const handleChangeFormat = event => setSelectedFormat(event.target.value); 
 
   const handleDownload = async () => {
     try {
-      const response = await axios.post('http://localhost:3001/download', { url: videoUrl }, { responseType: 'blob' });
+      const response = await axios.post('http://localhost:3001/download', { url: videoUrl, format: selectedFormat}, { responseType: 'blob' });
       
       const blob = new Blob([response.data]);
       const link = document.createElement('a');
       link.href = window.URL.createObjectURL(blob);
-      link.download = videoInfo.title+'.webm';
+      link.download = videoInfo.title+'.mp4';
       link.click();
     } catch (error) {
       console.error('Error initiating video download:', error);
@@ -61,7 +62,8 @@ const App =()=> {
     setVideoUrl(event.target.value)
   }
   const bestMp4Formats = filterBestMp4Formats();
-
+  bestMp4Formats.reverse()
+  console.log("this is the selected format: ",selectedFormat);
   return (
     <>
 
@@ -91,10 +93,10 @@ const App =()=> {
          <p>{videoInfo.title}</p>
          <div className='butdur'>
            <p>duration: {videoInfo.duration_string}</p> 
-        <select>
+        <select onChange={handleChangeFormat}> 
         {bestMp4Formats.map((format, index) => (
                       <option key={index} value={format.format_id}>
-                        {format.resolution} - {format.ext}
+                       {format.height}p - {format.ext}
                       </option>
                     ))}
         </select>

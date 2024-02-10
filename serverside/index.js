@@ -47,12 +47,10 @@ app.get('/video-info', (request, response) => {
   
 app.post('/download', (req, res) => {
   const videoUrl = req.body.url;
-
+  const format = req.body.format || 'bv'
   // sub-proceso para ejecutar los comandos en la consola
-  const ytDlpProcess = spawn('yt-dlp', [
-    '-o', path.join(__dirname, 'VideosDescargados', `${title}.%(ext)s`),
-    videoUrl
-  ]);
+  const ytDlpProcess = spawn('yt-dlp', [`-f${format}+ba`,'-o', path.join(__dirname, 'VideosDescargados', `${title}.%(ext)s`)
+  ,videoUrl,'-S ext:mp4:m4a']);
   ytDlpProcess.stdout.on('data', (data) => {
     // los resultados imprimir a consola
     console.log(`yt-dlp stdout: ${data}`);
@@ -67,7 +65,7 @@ app.post('/download', (req, res) => {
     if (code === 0) {
       // video descargado de forma exitosa
       // Enviar el video al cliente
-      const videoFilePath = path.join(__dirname, 'VideosDescargados',  `${title}.webm`);
+      const videoFilePath = path.join(__dirname, 'VideosDescargados',  `${title}.mp4`);
       res.sendFile(videoFilePath);
     } else {
       // La descarga falló
