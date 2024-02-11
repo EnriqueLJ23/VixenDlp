@@ -39,13 +39,22 @@ const App =()=> {
 
   const handleDownload = async () => {
     try {
-      const response = await axios.post('http://localhost:3001/download', { url: videoUrl, format: selectedFormat}, { responseType: 'blob' });
+      const response = await axios.post('http://localhost:3001/download', { 
+        url: videoUrl, 
+        format: selectedFormat}, 
+        {responseType: 'blob'});
       
-      const blob = new Blob([response.data]);
-      const link = document.createElement('a');
-      link.href = window.URL.createObjectURL(blob);
-      link.download = videoInfo.title+'.mp4';
-      link.click();
+// Create a Blob from the response data
+const blob = new Blob([response.data], { type: 'video/mp4' });
+
+// Create a temporary URL for the Blob
+// Create a temporary URL for the Blob
+const url = window.URL.createObjectURL(blob);
+
+// Open a new tab with the video URL
+window.open(url, '_blank');
+
+
     } catch (error) {
       console.error('Error initiating video download:', error);
     }

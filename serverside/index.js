@@ -48,30 +48,28 @@ app.get('/video-info', (request, response) => {
 app.post('/download', (req, res) => {
   const videoUrl = req.body.url;
   const format = req.body.format || 'bv'
+
   // sub-proceso para ejecutar los comandos en la consola
-  const ytDlpProcess = spawn('yt-dlp', [`-f${format}+ba`,'-o', path.join(__dirname, 'VideosDescargados', `${title}.%(ext)s`)
-  ,videoUrl,'-S ext:mp4:m4a']);
-  ytDlpProcess.stdout.on('data', (data) => {
-    // los resultados imprimir a consola
-    console.log(`yt-dlp stdout: ${data}`);
-  });
+  const ytDlpProcess = spawn('yt-dlp', ['-o', '-', videoUrl]);
 
-  ytDlpProcess.stderr.on('data', (data) => {
-    // por si hay algun error durante la ejecucion 
-    console.error(`yt-dlp stderr: ${data}`);
-  });
+  // Configurar el header de la respuesta
+  res.setHeader('Content-Type', 'video/mp4');
+  res.setHeader('Content-Disposition', 'inline');
+  res.setHeader('Accept-Ranges','bytes')
 
-  ytDlpProcess.on('close', (code) => {
-    if (code === 0) {
-      // video descargado de forma exitosa
-      // Enviar el video al cliente
-      const videoFilePath = path.join(__dirname, 'VideosDescargados',  `${title}.mp4`);
-      res.sendFile(videoFilePath);
-    } else {
-      // La descarga falló
-      res.status(500).json({ error: 'Video download failed' });
-    }
-  });
+ // Enviar el stream de yt-dlp en la respuesta
+ ytDlpProcess.stdout.pipe(res);
+
+ ytDlpProcess.on('error', (err) => {
+   console.error('Error executing yt-dlp:', err);
+   res.status(500).send('Internal Server Error');
+ });
+
+ ytDlpProcess.on('exit', (code, signal) => {
+   if (code !== 0) {
+     console.error(`yt-dlp process exited with code ${code} and signal ${signal}`);
+   }
+ });
 });
 
 
