@@ -2,7 +2,8 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const { spawn } = require('child_process');
-const path = require('path');
+let fs = require('fs'); 
+   
 
 
 app.use(express.json()); 
@@ -45,20 +46,19 @@ app.get('/video-info', (request, response) => {
   });
 });
   
-app.post('/download', (req, res) => {
-  const videoUrl = req.body.url;
+app.get('/download', (req, res) => {
+  const videoUrl = req.query.url;
   const format = req.body.format || 'bv'
 
   // sub-proceso para ejecutar los comandos en la consola
   const ytDlpProcess = spawn('yt-dlp', ['-o', '-', videoUrl]);
 
-  // Configurar el header de la respuesta
+  // Set Content-Type header
   res.setHeader('Content-Type', 'video/mp4');
-  res.setHeader('Content-Disposition', 'inline');
-  res.setHeader('Accept-Ranges','bytes')
-
- // Enviar el stream de yt-dlp en la respuesta
- ytDlpProcess.stdout.pipe(res);
+  res.setHeader('Accept-Ranges', 'bytes');
+  res.header('Content-Disposition', 'inline');
+  // Send the stream of yt-dlp in the response
+  ytDlpProcess.stdout.pipe(res);
 
  ytDlpProcess.on('error', (err) => {
    console.error('Error executing yt-dlp:', err);

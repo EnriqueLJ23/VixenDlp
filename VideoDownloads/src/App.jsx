@@ -1,5 +1,6 @@
 import { useState, useEffect} from 'react';
 import logo from './assets/logo3.png'
+import video from './assets/ddd.mp4'
 import axios from 'axios'
 // import './App.css'
 
@@ -39,20 +40,7 @@ const App =()=> {
 
   const handleDownload = async () => {
     try {
-      const response = await axios.post('http://localhost:3001/download', { 
-        url: videoUrl, 
-        format: selectedFormat}, 
-        {responseType: 'blob'});
-      
-// Create a Blob from the response data
-const blob = new Blob([response.data], { type: 'video/mp4' });
-
-// Create a temporary URL for the Blob
-// Create a temporary URL for the Blob
-const url = window.URL.createObjectURL(blob);
-
-// Open a new tab with the video URL
-window.open(url, '_blank');
+        window.open(`http://localhost:3001/download?url=${videoUrl}`, '_blank');
 
 
     } catch (error) {
@@ -108,6 +96,7 @@ window.open(url, '_blank');
          <button onClick={handleDownload} className='download'>Download</button>
          </div>
          </div>
+
          
        </div>
       ) 
@@ -115,7 +104,7 @@ window.open(url, '_blank');
       }
     </div>
   </div>
-
+  
     <footer>
       <p>The singularity is near!</p>
     </footer>
