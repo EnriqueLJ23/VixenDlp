@@ -2,15 +2,16 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const { spawn } = require('child_process');
-let fs = require('fs'); 
-   
-
-
+const YTDlpWrap = require('yt-dlp-wrap').default;
+const path = require('path');
+const fs = require('fs')
 app.use(express.json()); 
+const ytDlpWrap = new YTDlpWrap('C:\\Users\\jasso\\AppData\\Local\\Programs\\Python\\Python312\\Scripts\\yt-dlp.exe');
 
 app.use(cors())
 let title = ''
-app.get('/video-info', (request, response) => {
+let videoId = ''
+app.get('/video-info', async (request, response) => {
   const videoUrl = request.query.url;
   let dataBuffer = '';
 
@@ -34,6 +35,7 @@ app.get('/video-info', (request, response) => {
               const jsonData = JSON.parse(dataBuffer);
               console.log(jsonData.title)
               title = jsonData.title
+              videoId = jsonData.id
               response.json(jsonData);
           } catch (error) {
               console.error('Error parsing JSON:', error);
@@ -46,33 +48,68 @@ app.get('/video-info', (request, response) => {
   });
 });
   
-app.get('/download', (req, res) => {
-  const videoUrl = req.query.url;
-  const format = req.body.format || 'bv'
+app.post('/download',  (req, res) => {
+  const videoUrl = req.body.url;
 
-  // sub-proceso para ejecutar los comandos en la consola
-  const ytDlpProcess = spawn('yt-dlp', ['-o', '-', videoUrl]);
+let ytDlpEventEmitter = ytDlpWrap
+.exec([
+    videoUrl,
+    '-f',
+    'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best',
+    '-o',
+    path.join(__dirname, 'VideosDescargados', `${title}.mp4`),
+])
+.on('progress', (progress) =>
+    console.log(
+        progress.percent,
+        progress.totalSize,
+        progress.currentSpeed,
+        progress.eta
+    )
+)
+.on('ytDlpEvent', (eventType, eventData) =>
+    console.log(eventType, eventData)
+)
+.on('error', (error) => console.error(error))
+.on('close', () => res.redirect(`/video/${videoId}`));
 
-  // Set Content-Type header
-  res.setHeader('Content-Type', 'video/mp4');
-  res.setHeader('Accept-Ranges', 'bytes');
-  res.header('Content-Disposition', 'inline');
-  // Send the stream of yt-dlp in the response
-  ytDlpProcess.stdout.pipe(res);
-
- ytDlpProcess.on('error', (err) => {
-   console.error('Error executing yt-dlp:', err);
-   res.status(500).send('Internal Server Error');
- });
-
- ytDlpProcess.on('exit', (code, signal) => {
-   if (code !== 0) {
-     console.error(`yt-dlp process exited with code ${code} and signal ${signal}`);
-   }
- });
+console.log(ytDlpEventEmitter.ytDlpProcess.pid);
 });
 
+app.get('/video/:id', (req, res) => {
+    const videoPath =  path.join(__dirname, 'VideosDescargados', `${title}.mp4`)
+console.log(videoPath);
+    if (!fs.existsSync(videoPath)) {
+        return res.status(404).send('Video not found!')
+    }
 
+    const stat = fs.statSync(videoPath)
+    const fileSize = stat.size
+    const range = req.headers.range
+
+    if (range) {
+        const parts = range.replace(/bytes=/, '').split('-')
+        const start = parseInt(parts[0], 10)
+        const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1
+        const chunkSize = (end - start) + 1
+        const file = fs.createReadStream(videoPath, { start, end })
+        const headers = {
+            'Content-Range': `bytes ${start}-${end}/${fileSize}`,
+            'Accept-Ranges': 'bytes',
+            'Content-Length': chunkSize,
+            'Content-Type': 'video/mp4'
+        }
+        res.writeHead(206, headers)
+        file.pipe(res)
+    } else {
+        const headers = {
+            'Content-Length': fileSize,
+            'Content-Type': 'video/mp4'
+        }
+        res.writeHead(200, headers)
+        fs.createReadStream(videoPath).pipe(res)
+    }
+})
 
 
   const PORT = 3001

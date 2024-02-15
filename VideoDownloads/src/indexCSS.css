@@ -79,6 +79,7 @@ html, body {
     flex-direction: column;
     margin: 13px auto; 
     max-width: 1000px;
+    max-height: 350px;
   }
 
 .card {
@@ -86,7 +87,6 @@ html, body {
     flex-direction: column;
     background: #1D1D1D;
     border-radius: 8px;
-    height: 350px;
   }
 
 form {
@@ -97,7 +97,7 @@ form {
 .videoInfo{  
   margin-left: 15px;
   margin-right: 15px;
-  margin-top: auto;
+  margin-top: 20px;
   margin-bottom: 15px;
   display: flex;
   flex-direction: row;
@@ -171,44 +171,27 @@ form {
   border-radius: 8px;
   background-color: #1976D2;
   color: white;
+  transition-duration: 0.4s;
 }
 
-.ddd{
-  display: flex;
-  margin: 10px;
-  flex-direction: row;
-  text-align: justify;
-  text-justify: inter-word;
-  margin-bottom: 30px;
-}
-.ddd img{
-  width: 190px;
-  height: 120px;
-  margin: auto;
-}
-.ddd p{  
-  margin-top: 0;
-  margin-left: 10px;
-  margin-right: 10px;
-}
-.ddd h2{  
-  margin-bottom: 0;
-  margin-left: 10px;
+button:hover {
+  background-color: #5d16e0; /* Green */
+  color: white;
 }
 
-.aboutPa h1{
-margin-top: 70px;
-}
 
-#onlinet {
-  text-align: center;
-}
+
 
 footer p {
   text-align: center;
 }
 footer { 
+
   margin: auto;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
   height: 50px;
   border-top: 1px solid #383838;
   color: white;  
